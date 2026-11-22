@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ms"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17191e"><title>Atiqah Perodua Pro</title>
+<style>
+:root{--red:#d71920;--dark:#17191e;--bg:#f3f4f6;--line:#e5e7eb;--muted:#687080}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,sans-serif;color:#20242b}
+header{background:var(--dark);color:white;padding:20px 16px}header>div,main{max-width:900px;margin:auto}
+.brand{color:#ffb9bc;font-size:11px;font-weight:800;letter-spacing:2px}h1{font-size:24px;margin:7px 0 4px}header p{color:#c5c8cf;font-size:13px;margin:0}
+main{padding:15px}.panel{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px;margin-bottom:13px}
+h2{font-size:16px;margin:0 0 14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+label{display:block;color:var(--muted);font-size:11px;font-weight:bold;margin-bottom:6px}
+input,select{width:100%;padding:12px;border:1px solid #d6d9df;border-radius:9px;font-size:15px;background:white;color:#20242b}
+input:focus,select:focus{outline:2px solid #f3b5b8;border-color:var(--red)}
+.full{grid-column:1/-1}.hint{font-size:11px;color:var(--muted);margin-top:7px}
+button{border:0;border-radius:10px;padding:13px 14px;background:var(--red);color:#fff;font-size:13px;font-weight:bold;cursor:pointer}
+button.secondary{background:#272b33}button.light{background:#f0f1f3;color:#272b33}button.danger{background:#fff0f0;color:#b51d24}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions button{flex:1;min-width:130px}
+.summary{background:#191c22;color:#fff;border-radius:15px;padding:17px;margin-bottom:13px}
+.eyebrow{font-size:10px;color:#ffb9bc;font-weight:bold;letter-spacing:1.2px}.monthly{font-size:34px;font-weight:800;margin:7px 0}
+.monthly small{font-size:12px;color:#c6c9d0;font-weight:normal}.pills{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pill{background:#2a2e36;border-radius:9px;padding:10px}.pill small{display:block;color:#c0c4cc;font-size:9px}.pill b{display:block;font-size:13px;margin-top:5px}
+.rows{display:grid;grid-template-columns:1fr auto;gap:10px;font-size:13px}.rows div:nth-child(odd){color:var(--muted)}.rows div:nth-child(even){font-weight:bold;text-align:right;font-variant-numeric:tabular-nums}
+.tenures{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tenure{border:1px solid var(--line);border-radius:10px;padding:11px;text-align:center}.tenure small{font-size:10px;color:var(--muted)}.tenure b{display:block;font-size:15px;margin-top:5px}
+.quote{border:1px solid var(--line);border-radius:10px;padding:12px;margin:8px 0}.quote strong{font-size:13px}.quote p{font-size:12px;color:var(--muted);margin:5px 0}
+#app{display:none}.toprow{display:flex;align-items:center;justify-content:space-between;gap:10px}.status{font-size:11px;color:#16834b}.hidden{display:none!important}
+footer{text-align:center;color:#8a909b;font-size:10px;padding:8px 15px 25px}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.monthly{font-size:29px}.pills{gap:5px}.pill{padding:8px}.pill b{font-size:11px}}
+</style></head>
+<body>
+<header><div><div class="brand">ATIQAH PERODUA</div><h1>Atiqah Perodua Pro</h1><p>Kalkulator loan · Quotation · Rekod customer</p></div></header>
+<main>
+<section id="login" class="panel">
+<h2>Log masuk akaun Atiqah</h2>
+<div class="grid"><div class="full"><label>EMAIL</label><input id="email" type="email" autocomplete="username" placeholder="Email Supabase"></div>
+<div class="full"><label>PASSWORD</label><input id="password" type="password" autocomplete="current-password" placeholder="Password akaun sedia ada"></div></div>
+<div class="actions"><button id="loginBtn">LOG MASUK</button></div><p class="hint">Gunakan akaun Supabase yang Atiqah telah cipta sebelum ini. Tiada password disimpan dalam aplikasi.</p><p id="loginMsg" class="hint"></p>
+</section>
+<div id="app">
+<div class="toprow" style="padding:2px 2px 12px"><span id="welcome" class="status">Disambungkan</span><button class="light" id="logoutBtn">LOG KELUAR</button></div>
+<section class="panel"><h2>1. Maklumat customer & kereta</h2><div class="grid">
+<div><label>NAMA CUSTOMER</label><input id="customer" placeholder="Nama customer"></div>
+<div><label>NO. TELEFON</label><input id="phone" placeholder="01XXXXXXXX"></div>
+<div><label>MODEL</label><select id="model"></select></div>
+<div><label>VARIAN</label><select id="variant"></select></div></div></section>
+<section class="panel"><h2>2. Tetapan kiraan</h2><div class="grid">
+<div><label>NCD INSURANS (%)</label><select id="ncd"><option value="0">0%</option><option value="25">25%</option><option value="30">30%</option><option value="38.33">38.33%</option><option value="45">45%</option><option value="55">55%</option></select></div>
+<div><label>REBATE (RM)</label><input id="rebate" type="number" min="0" step="100"></div>
+<div><label>JENIS DEPOSIT</label><select id="dpType"><option value="RM">RM</option><option value="%">%</option></select></div>
+<div><label>DOWNPAYMENT</label><input id="dp" type="number" min="0" step="100"></div>
+<div><label>INTEREST RATE (% FLAT)</label><input id="rate" type="number" min="0" max="30" step="0.01"></div>
+<div><label>TEMPOH LOAN</label><select id="years"><option value="9">9 tahun</option><option value="7">7 tahun</option><option value="5">5 tahun</option></select></div>
+</div><div class="hint">Harga dan insurans asal diambil daripada Excel. Rebate, deposit dan interest boleh diubah.</div></section>
+<section class="summary"><div class="eyebrow">ANGGARAN ANSURAN BULANAN</div><div id="monthly" class="monthly">RM0.00 <small>/ bulan</small></div>
+<div class="pills"><div class="pill"><small>OTR</small><b id="otrPill">RM0</b></div><div class="pill"><small>DEPOSIT</small><b id="dpPill">RM0</b></div><div class="pill"><small>JUMLAH LOAN</small><b id="loanPill">RM0</b></div></div></section>
+<section class="panel"><h2>3. Pecahan kiraan</h2><div class="rows">
+<div>Harga kereta</div><div id="price">—</div><div>Insurans selepas NCD</div><div id="insurance">—</div><div>OTR termasuk insurans</div><div id="otr">—</div><div>Rebate</div><div id="rebateOut">—</div><div>Downpayment</div><div id="dpOut">—</div><div>Jumlah pinjaman</div><div id="loan">—</div><div>Kadar faedah</div><div id="rateOut">—</div></div></section>
+<section class="panel"><h2>4. Perbandingan ansuran</h2><div id="tenures" class="tenures"></div>
+<div class="actions"><button id="saveBtn">SIMPAN QUOTATION</button><button class="secondary" id="pdfBtn">DOWNLOAD PDF</button><button class="light" id="waBtn">WHATSAPP</button></div><p id="saveMsg" class="hint"></p></section>
+<section class="panel"><div class="toprow"><h2 style="margin:0">5. Rekod quotation</h2><button class="light" id="refreshBtn">REFRESH</button></div><div id="history"><p class="hint">Rekod quotation akan dipaparkan selepas log masuk.</p></div></section>
+<section class="panel"><h2>6. Kemaskini harga / rebate</h2><div class="hint">Pilih varian dan masukkan harga atau rebate baharu. Tetapan disimpan dalam akaun Atiqah sahaja.</div>
+<div class="grid" style="margin-top:12px"><div><label>HARGA KERETA (RM)</label><input id="editPrice" type="number"></div><div><label>INSURANS ASAS (RM)</label><input id="editInsurance" type="number"></div><div class="full"><label>REBATE DEFAULT (RM)</label><input id="editRebate" type="number"></div></div>
+<div class="actions"><button id="updateVariantBtn">SIMPAN KEMASKINI VARIAN</button><button class="light" id="resetVariantBtn">RESET KE DATA EXCEL</button></div><p id="settingsMsg" class="hint"></p></section>
+</div>
+<footer>Anggaran sahaja. Tertakluk kepada pengesahan harga, promosi, insurans dan kelulusan bank. Data quotation disimpan secara peribadi di akaun Supabase Atiqah.</footer>
+</main>
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.99.0';
+const SUPABASE_URL='https://tzwdlwqoegomgkfqrsex.supabase.co';
+const SUPABASE_KEY='sb_publishable_6DKWbhh6-Q8kYFE24UOKfA_bJaVFtfT';
+const supabase=createClient(SUPABASE_URL,SUPABASE_KEY);
+const DB={"AXIA": {"rate": 0.03, "dpDefault": 0, "variants": [{"name": "AXIA 1.0 G (AT)", "price": 33900.0, "insurance": 1165.35, "insuranceRate": 0.033, "rebate": 0}, {"name": "AXIA 1.0 X (AT)", "price": 38500.0, "insurance": 1317.95, "insuranceRate": 0.033, "rebate": 3900}, {"name": "AXIA 1.0 SE (AT)", "price": 43000.0, "insurance": 1400.25, "insuranceRate": 0.033, "rebate": 4300}, {"name": "AXIA 1.0 AV (AT)", "price": 49000.0, "insurance": 1560.2, "insuranceRate": 0.033, "rebate": 0}]}, "BEZZA": {"rate": 0.03, "dpDefault": 0, "variants": [{"name": "BEZZA 1.0 G (MT)", "price": 34580.0, "insurance": 1301.55, "insuranceRate": 0.033, "rebate": 0}, {"name": "BEZZA 1.0 G (AT)", "price": 36580.0, "insurance": 1360.55, "insuranceRate": 0.033, "rebate": 0}, {"name": "BEZZA 1.3 X (AT)", "price": 43980.0, "insurance": 1596.4, "insuranceRate": 0.033, "rebate": 4000}, {"name": "BEZZA 1.3 AV (AT)", "price": 49980.0, "insurance": 1773.31, "insuranceRate": 0.033, "rebate": 5000}]}, "MYVI": {"rate": 0.03, "dpDefault": 4000, "variants": [{"name": "MYVI 1.3 G (MT)", "price": 46500.0, "insurance": 1494.2, "insuranceRate": 0.033, "rebate": 0}, {"name": "MYVI 1.3 G ASA (AT)", "price": 48500.0, "insurance": 1546.29, "insuranceRate": 0.033, "rebate": 0}, {"name": "MYVI 1.5 X (AT)", "price": 50900.0, "insurance": 1656.18, "insuranceRate": 0.033, "rebate": 1500}, {"name": "MYVI 1.5 H (AT)", "price": 54900.0, "insurance": 1760.36, "insuranceRate": 0.033, "rebate": 0}, {"name": "MYVI 1.5 AV (AT)", "price": 59900.0, "insurance": 1890.58, "insuranceRate": 0.033, "rebate": 0}]}, "ALZA": {"rate": 0.023, "dpDefault": 0, "variants": [{"name": "ALZA 1.5 X AT", "price": 62500.0, "insurance": 1844.49, "insuranceRate": 0.026, "rebate": 0}, {"name": "ALZA 1.5 H AT", "price": 68000.0, "insurance": 1993.32, "insuranceRate": 0.026, "rebate": 0}, {"name": "ALZA 1.5 AV AT", "price": 75500.0, "insurance": 2169.09, "insuranceRate": 0.026, "rebate": 0}]}, "TRAZ": {"rate": 0.023, "dpDefault": 0, "variants": [{"name": "TRAZ 1.5 X AT (SOLID/METALLIC)", "price": 76100.0, "insurance": 2080.55, "insuranceRate": 0.026, "rebate": 0}, {"name": "TRAZ 1.5 H AT (SOLID/METALLIC)", "price": 81100.0, "insurance": 2199.9, "insuranceRate": 0.026, "rebate": 0}, {"name": "TRAZ 1.5 H AT (2 TONE)", "price": 82000.0, "insurance": 2223.75, "insuranceRate": 0.026, "rebate": 0}]}, "ATIVA": {"rate": 0.023, "dpDefault": 0, "variants": [{"name": "ATIVA 1.0 TURBO X CVT (METALLIC)", "price": 62500.0, "insurance": 1822.2, "insuranceRate": 0.026, "rebate": 0}, {"name": "ATIVA 1.0 TURBO H CVT (METALLIC)", "price": 67300.0, "insurance": 1946.22, "insuranceRate": 0.026, "rebate": 0}, {"name": "ATIVA 1.0 TURBO H CVT (SPECIAL METALLIC)", "price": 67800.0, "insurance": 1971.02, "insuranceRate": 0.026, "rebate": 7000}, {"name": "ATIVA 1.0 TURBO AV CVT (METALLIC)", "price": 72600.0, "insurance": 2070.24, "insuranceRate": 0.026, "rebate": 0}, {"name": "ATIVA 1.0 TURBO AV CVT (SPECIAL METALLIC)", "price": 73100.0, "insurance": 2095.04, "insuranceRate": 0.026, "rebate": 0}, {"name": "ATIVA 1.0 TURBO AV CVT (2 TONE)", "price": 73400.0, "insurance": 2095.04, "insuranceRate": 0.026, "rebate": 7500}]}, "ARUZ": {"rate": 0.023, "dpDefault": 0, "variants": [{"name": "ARUZ 1.5 X AUTO (SOLID/METALLIC)", "price": 68900.0, "insurance": 2297.98, "insuranceRate": 0.026, "rebate": 0}, {"name": "ARUZ 1.5 AV AUTO (SOLID/METALLIC)", "price": 73900.0, "insurance": 2438.38, "insuranceRate": 0.026, "rebate": 4000}]}, "QV-E": {"rate": 0.022, "dpDefault": 10, "variants": [{"name": "QV-E (BAAS)", "price": 69999.0, "insurance": 2500.0, "insuranceRate": 0.026, "rebate": 6500}, {"name": "QV-E (FULL PURCHASE)", "price": 93999.0, "insurance": 3300.0, "insuranceRate": 0.026, "rebate": 6500}]}};
+const $=id=>document.getElementById(id);
+let user=null,settings={},current=null;
+const money=n=>'RM'+(Number(n)||0).toLocaleString('en-MY',{minimumFractionDigits:2,maximumFractionDigits:2});
+function variant(){return DB[$('model').value].variants[Number($('variant').value)||0]}
+function key(){return $('model').value+'|'+variant().name}
+function effective(){const v=variant(),s=settings[key()]||{};return {...v,price:Number(s.price??v.price),insurance:Number(s.insurance??v.insurance),rebate:Number(s.rebate??v.rebate)}}
+function initModels(){Object.keys(DB).forEach(m=>$('model').add(new Option(m,m)));$('model').value='BEZZA';loadVariants();$('model').onchange=()=>{loadVariants();calc()};$('variant').onchange=()=>{loadVariantSettings();calc()};['ncd','rebate','dpType','dp','rate','years'].forEach(id=>$(id).addEventListener('input',calc));$('customer').oninput=()=>{}}
+function loadVariants(){const arr=DB[$('model').value].variants;$('variant').innerHTML='';arr.forEach((v,i)=>$('variant').add(new Option(v.name,i)));loadVariantSettings()}
+function loadVariantSettings(){const v=effective();$('rebate').value=v.rebate;$('editPrice').value=v.price;$('editInsurance').value=v.insurance;$('editRebate').value=v.rebate;$('rate').value=(DB[$('model').value].rate*100).toFixed(2);$('dp').value=DB[$('model').value].dpDefault;$('dpType').value=$('model').value==='QV-E'?'%':'RM';calc()}
+function calculate(y){const v=effective(),ncd=Number($('ncd').value)||0,ins=v.insurance*(1-ncd/100),otr=v.price+ins,rebate=Number($('rebate').value)||0,dv=Number($('dp').value)||0,dp=$('dpType').value==='%'?otr*dv/100:dv,loan=Math.max(0,otr-rebate-dp),rate=(Number($('rate').value)||0)/100;return {v,ins,otr,rebate,dp,loan,rate,years:y,monthly:(loan+loan*rate*y)/(y*12)}}
+function calc(){if(!$('model').value)return;const c=calculate(Number($('years').value));current=c;$('monthly').innerHTML=money(c.monthly)+' <small>/ bulan</small>';$('otrPill').textContent=money(c.otr);$('dpPill').textContent=money(c.dp);$('loanPill').textContent=money(c.loan);
+$('price').textContent=money(c.v.price);$('insurance').textContent=money(c.ins);$('otr').textContent=money(c.otr);$('rebateOut').textContent='− '+money(c.rebate);$('dpOut').textContent=money(c.dp);$('loan').textContent=money(c.loan);$('rateOut').textContent=(c.rate*100).toFixed(2)+'% flat';
+$('tenures').innerHTML=[9,7,5].map(y=>`<div class="tenure"><small>${y} TAHUN</small><b>${money(calculate(y).monthly)}</b></div>`).join('')}
+async function login(){const email=$('email').value.trim(),password=$('password').value; if(!email||!password){$('loginMsg').textContent='Masukkan email dan password.';return}
+$('loginBtn').disabled=true;$('loginMsg').textContent='Sedang log masuk...';const {data,error}=await supabase.auth.signInWithPassword({email,password});$('loginBtn').disabled=false;if(error){$('loginMsg').textContent=error.message;return}user=data.user;await showApp()}
+async function showApp(){ $('login').style.display='none';$('app').style.display='block';$('welcome').textContent='Log masuk: '+(user.email||'Akaun Atiqah');await loadSettings();loadVariantSettings();await loadHistory()}
+async function logout(){await supabase.auth.signOut();user=null;$('app').style.display='none';$('login').style.display='block'}
+async function loadSettings(){const {data,error}=await supabase.from('app_settings').select('settings').eq('user_id',user.id).maybeSingle();if(error){$('settingsMsg').textContent=error.message;return}settings=data?.settings||{}}
+async function saveSettings(){const {error}=await supabase.from('app_settings').upsert({user_id:user.id,settings,updated_at:new Date().toISOString()});if(error)throw error}
+async function updateVariant(){const k=key();settings[k]={price:Number($('editPrice').value)||0,insurance:Number($('editInsurance').value)||0,rebate:Number($('editRebate').value)||0};try{await saveSettings();$('settingsMsg').textContent='Tetapan varian berjaya disimpan.';loadVariantSettings()}catch(e){$('settingsMsg').textContent=e.message}}
+async function resetVariant(){delete settings[key()];try{await saveSettings();$('settingsMsg').textContent='Data varian dikembalikan kepada nilai Excel.';loadVariantSettings()}catch(e){$('settingsMsg').textContent=e.message}}
+function payload(){const c=calculate(Number($('years').value));return {user_id:user.id,customer_name:$('customer').value.trim()||'Customer',phone:$('phone').value.trim()||null,model:$('model').value,variant:c.v.name,vehicle_price:c.v.price,insurance:c.ins,ncd:Number($('ncd').value)||0,otr:c.otr,rebate:c.rebate,downpayment:c.dp,loan_amount:c.loan,interest_rate:c.rate*100,tenure_years:c.years,monthly_payment:c.monthly}}
+async function saveQuote(){if(!$('customer').value.trim()){ $('saveMsg').textContent='Masukkan nama customer dahulu.';return}const {error}=await supabase.from('quotations').insert(payload());$('saveMsg').textContent=error?error.message:'Quotation berjaya disimpan dalam database.';if(!error)await loadHistory()}
+async function loadHistory(){const {data,error}=await supabase.from('quotations').select('*').order('created_at',{ascending:false}).limit(40);if(error){$('history').innerHTML='<p class="hint">'+error.message+'</p>';return}if(!data.length){$('history').innerHTML='<p class="hint">Belum ada quotation disimpan.</p>';return}
+$('history').innerHTML=data.map(q=>`<div class="quote"><strong>${esc(q.customer_name)} · ${esc(q.model)}</strong><p>${esc(q.variant)} · ${new Date(q.created_at).toLocaleDateString('ms-MY')}<br>OTR ${money(q.otr)} · Loan ${money(q.loan_amount)} · ${q.tenure_years} tahun<br><b>${money(q.monthly_payment)}/bulan</b></p></div>`).join('')}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function summaryText(){const p=payload();return `ATIQAH PERODUA\nQUOTATION ANGGARAN\nCustomer: ${p.customer_name}\nTelefon: ${p.phone||'-'}\nModel: ${p.model} - ${p.variant}\nHarga: ${money(p.vehicle_price)}\nInsurans selepas NCD ${p.ncd}%: ${money(p.insurance)}\nOTR: ${money(p.otr)}\nRebate: ${money(p.rebate)}\nDownpayment: ${money(p.downpayment)}\nJumlah loan: ${money(p.loan_amount)}\nInterest: ${p.interest_rate.toFixed(2)}% flat\nTempoh: ${p.tenure_years} tahun\nAnsuran: ${money(p.monthly_payment)}/bulan\n\nTertakluk kepada pengesahan dan kelulusan bank.`}
+async function pdf(){const {jsPDF}=await import('https://esm.sh/jspdf@2.5.2');const doc=new jsPDF();const p=payload();doc.setFontSize(18);doc.text('ATIQAH PERODUA',15,20);doc.setFontSize(12);doc.text('QUOTATION ANGGARAN',15,29);doc.setFontSize(10);const lines=summaryText().split('\n');let y=42;for(const line of lines){doc.text(line,15,y);y+=7;if(y>275){doc.addPage();y=20}}doc.save('Quotation-'+p.customer_name.replace(/[^a-z0-9]/gi,'-')+'.pdf')}
+function whatsapp(){const p=payload();const phone=p.phone? p.phone.replace(/\\D/g,''):'';const url='https://wa.me/'+phone+'?text='+encodeURIComponent(summaryText());window.open(url,'_blank')}
+$('loginBtn').onclick=login;$('password').addEventListener('keydown',e=>{if(e.key==='Enter')login()});$('logoutBtn').onclick=logout;$('saveBtn').onclick=saveQuote;$('refreshBtn').onclick=loadHistory;$('updateVariantBtn').onclick=updateVariant;$('resetVariantBtn').onclick=resetVariant;$('pdfBtn').onclick=pdf;$('waBtn').onclick=whatsapp;
+initModels();supabase.auth.getSession().then(async({data})=>{if(data.session){user=data.session.user;await showApp()}});
+</script></body></html>
